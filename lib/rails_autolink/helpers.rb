@@ -106,8 +106,14 @@ module RailsAutolink
                   end
                 end
 
-                link_text = block_given?? yield(href) : href
+                ## CREWW CHANGE
+                # link_text = block_given?? yield(href) : href
+                link_text = href
                 href = 'http://' + href unless scheme
+                if block_given?
+                  href =  yield(href)
+                end
+                ## END CREWW CHANGE
 
                 unless options[:sanitize] == false
                   link_text = sanitize(link_text)
@@ -127,7 +133,10 @@ module RailsAutolink
               if auto_linked?($`, $')
                 text.html_safe
               else
-                display_text = (block_given?) ? yield(text) : text
+                ## CREWW CHANGE
+                # display_text = (block_given?) ? yield(text) : text
+                display_text = text
+                ## END CREWW CHANGE
 
                 unless options[:sanitize] == false
                   text         = sanitize(text)
